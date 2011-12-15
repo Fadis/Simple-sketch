@@ -47,20 +47,18 @@ FrameBuffer::FrameBuffer( unsigned int _internal_size ) {
   internal_size = 1u << _internal_size;
   glGenTextures( 1, &name );
   glBindTexture( GL_TEXTURE_2D, name );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-  glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, internal_size, internal_size, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
-  glGenRenderbuffers( 1, &depth_buffer );
-  glBindRenderbuffer( GL_RENDERBUFFER, depth_buffer );
-  glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_COMPONENT, internal_size, internal_size );
-  glGenFramebuffers( 1, &frame_buffer );
-  glBindFramebuffer( GL_FRAMEBUFFER, frame_buffer );
-  glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                            GL_RENDERBUFFER, depth_buffer );
-  glBindFramebuffer( GL_FRAMEBUFFER, 0 );
-  glBindRenderbuffer( GL_RENDERBUFFER, 0 );
+  if( GLEW_VERSION_1_5 ) {
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, internal_size, internal_size, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
+    glGenRenderbuffers( 1, &depth_buffer );
+    glBindRenderbuffer( GL_RENDERBUFFER, depth_buffer );
+    glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_COMPONENT, internal_size, internal_size );
+    glGenFramebuffers( 1, &frame_buffer );
+    glBindFramebuffer( GL_FRAMEBUFFER, frame_buffer );
+    glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                              GL_RENDERBUFFER, depth_buffer );
+    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+    glBindRenderbuffer( GL_RENDERBUFFER, 0 );
+  }
 }
 
 void FrameBuffer::begin() const {
