@@ -46,16 +46,11 @@ if (NOT ILU_FOUND)
     message(SEND_ERROR "DevIL Utility not found - skipping building tests")
 endif (NOT ILU_FOUND)
 
-find_package(CG REQUIRED )
-if (NOT CG_FOUND)
-    message(SEND_ERROR "Cg not found - skipping building tests")
-endif (NOT CG_FOUND)
-
 find_package(GLEW REQUIRED )
 if (NOT GLEW_FOUND)
     message(SEND_ERROR "GLEW not found - skipping building tests")
 endif (NOT GLEW_FOUND)
 
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include ${Boost_INCLUDE_DIRS} ${GLFW_INCLUDE_DIR} ${CG_INCLUDE_PATH} ${GLEW_INCLUDE_PATH} ${IL_INCLUDE_DIR} ${ILU_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include ${Boost_INCLUDE_DIRS} ${GLFW_INCLUDE_DIR} ${GLEW_INCLUDE_PATH} ${IL_INCLUDE_DIR} ${ILU_INCLUDE_DIR} )
 
 subdirs( src )
